@@ -1,0 +1,15 @@
+[package]
+name = "my_cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "statusbar"
+path = "src/statusbar.rs"
+
+[dependencies]
+chrono = "0.4.39"
+clap = "3.2"
+
+[profile.release]
+opt-level = "z"
