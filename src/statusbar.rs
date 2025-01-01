@@ -11,7 +11,7 @@ fn cpu() -> String {
         .expect("Failed to get CPU load")
         .stdout;
     let cpu_val = String::from_utf8_lossy(&output).split_whitespace().next().unwrap().to_string();
-    format!("  {}", cpu_val)
+    cpu_val
 }
 
 fn battery() -> String {
@@ -19,7 +19,7 @@ fn battery() -> String {
         .expect("Failed to get battery capacity")
         .trim()
         .to_string();
-    format!("  {}", get_capacity)
+    format!("{}%", get_capacity)
 }
 
 fn brightness() -> String {
@@ -27,7 +27,7 @@ fn brightness() -> String {
         .expect("Failed to get brightness")
         .trim()
         .to_string();
-    format!("  {}", brightness_val)
+    brightness_val
 }
 
 fn mem() -> String {
@@ -37,7 +37,7 @@ fn mem() -> String {
         .expect("Failed to get memory usage")
         .stdout;
     let mem_val = String::from_utf8_lossy(&output).lines().nth(1).unwrap().split_whitespace().nth(2).unwrap().to_string();
-    format!("  {}", mem_val)
+    mem_val
 }
 
 fn wlan() -> String {
@@ -51,9 +51,9 @@ fn wlan() -> String {
     let wifi_status = String::from_utf8_lossy(&output).lines().find(|line| line.contains("State")).unwrap().split_whitespace().nth(1).unwrap().to_string();
     if wifi_status == "connected" {
         let wifi_name = String::from_utf8_lossy(&output).lines().find(|line| line.contains("Connected network")).unwrap().split_whitespace().nth(2).unwrap().to_string();
-        format!("   {}", wifi_name)
+        wifi_name
     } else {
-        String::from("   Not connected")
+        String::from("Not connected")
     }
 }
 
@@ -66,17 +66,17 @@ fn volume() -> String {
         .stdout;
     let vol = String::from_utf8_lossy(&output).lines().find(|line| line.contains("Volume:")).unwrap().split_whitespace().nth(4).unwrap().to_string().replace('%', "");
     let mute = String::from_utf8_lossy(&output).lines().find(|line| line.contains("Mute:")).unwrap().split_whitespace().nth(1).unwrap().to_string();
-    
+
     if mute == "yes" {
-        String::from("  Muted")
+        String::from("Muted")
     } else {
-        format!("   {}%", vol)
+        format!("{}%", vol)
     }
 }
 
 fn clock() -> String {
     let now = chrono::Local::now();
-    format!("  {} ", now.format("%A, %B %d, %Y %H:%M:%S"))
+    format!("{} ", now.format("%A, %B %d, %Y %H:%M:%S"))
 }
 
 fn update_status() {
